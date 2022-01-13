@@ -63,6 +63,7 @@ _thisDir =  os.path.abspath(os.getcwd())
 data_dir = _thisDir + os.sep +  'data' + os.sep + 'behavior' + os.sep + 'pour_thibault' 
 data_array = np.load(data_dir + os.sep +   's1.npy', allow_pickle=True,)
 number_of_dots =  data_array.shape[0]
+dotsize = 4 ## needed to recover the true frame via max filter
 # 1ere colonne: numéro de l'essai
 # 2eme colonne: cohérence
 # 3eme colonne force
@@ -88,6 +89,7 @@ for f in range(3):
         for k in range(dots.shape[0]): ## recover dots coordonnates from sparse matrices
                 dots[k] = dots[k].toarray()*1            
         dots = np.dstack(dots)
+        dots = maximum_filter(dots,  dotsize) ##build dots of size=dotsize
         dots_energy = me.apply_motion_energy_filters(dots, filters) ## apply filters on trial i
         energy = np.sum(dots_energy, axis=(0, 1)) ## motion energy on trial i
         energy = energy.astype(float)
