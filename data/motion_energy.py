@@ -120,13 +120,35 @@ for f in range(3):
 np.save('kernel_resp.npy', kernel_resp, allow_pickle=True)
 np.save('kernel_stim.npy', kernel_stim, allow_pickle=True)
 
-i = 1
-y = kernel_stim[i]
-f, ax = plt.subplots()
-n = y.shape[0]
-x = np.linspace(1, n, n)
-ax.plot(x, y)
+y0 = kernel_resp[0]
+y1 = kernel_resp[1]
+y2 = kernel_resp[2]
+x0 = np.linspace(1, y0.shape[0],  y0.shape[0]) - y0.shape[0]
+x1 = np.linspace(1, y1.shape[0], y1.shape[0])  - y1.shape[0]
+x2 = np.linspace(1, y2.shape[0],  y2.shape[0])  - y2.shape[0]
+plt.plot(x0,y0,label='force =' +  str(force[0]))
+plt.plot(x1,y1, label='force =' +  str(force[1]))
+plt.plot(x2,y2, label='force =' +  str(force[2]))
+plt.title(label="response aligned kernel")
 ax.set(xlabel="time",
        ylabel="sensory weights (a.u.)")
-plt.show()
+plt.legend()
+plt.savefig('resp_aligned.png')
 plt.close('all')
+
+y0 = kernel_stim[0]
+y1 = kernel_stim[1]
+y2 = kernel_stim[2]
+x0 = np.linspace(1, y0.shape[0],  y0.shape[0])
+x1 = np.linspace(1, y1.shape[0], y1.shape[0])
+x2 = np.linspace(1, y2.shape[0],  y2.shape[0])
+plt.plot(x0,y0,label='force =' +  str(force[0]))
+plt.plot(x1,y1, label='force =' +  str(force[1]))
+plt.plot(x2,y2, label='force =' +  str(force[2]))
+plt.title(label="stimulus aligned kernel")
+ax.set(xlabel="time",
+       ylabel="sensory weights (a.u.)")
+plt.legend()
+plt.savefig('stim_aligned.png')
+plt.close('all')
+    
